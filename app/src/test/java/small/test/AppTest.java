@@ -27,54 +27,39 @@ class AppTest {
         BufferedReader br = new BufferedReader(fr);
         StringBuilder s = new StringBuilder();
         String line;
+//        int sum = 0;
+//        int i = 0;
         while ((line = br.readLine()) != null) {
+//            System.out.println("line " + i + " growing length= " + sum);
+//            i += 1;
+//            sum += line.length();
             s.append(line).append("\n");
         }
+//        System.out.println("total length w/o trim= " + sum);
         return s.substring(0, s.length() - 1).trim();
     }
 
     public static String fixtureToStringFiles(String filePath) throws Exception {
-        return Files.readString(Paths.get(filePath).toAbsolutePath().normalize());
+        var s = Files.readString(Paths.get(filePath).toAbsolutePath().normalize()).trim();
+//        var s1 = s.replace("789", "999");
+//        var s2 = s1.replace("210", "000");
+//        System.out.println("s2 = \n" + s2);
+        return s;
     }
     @Test
     public void Test() throws Exception {
-        String expected = """
-                {
-                    chars1: [a, b, c]
-                  - chars2: [d, e, f]
-                  + chars2: false
-                  - checked: false
-                  + checked: true
-                  - default: null
-                  + default: [value1, value2]
-                  - id: 45
-                  + id: null
-                  - key1: value1
-                  + key2: value2
-                    numbers1: [1, 2, 3, 4]
-                  - numbers2: [2, 3, 4, 5]
-                  + numbers2: [22, 33, 44, 55]
-                  - numbers3: [3, 4, 5]
-                  + numbers4: [4, 5, 6]
-                  + obj1: {nestedKey=value, isNested=true}
-                  - setting1: Some value
-                  + setting1: Another value
-                  - setting2: 200
-                  + setting2: 300
-                  - setting3: true
-                  + setting3: none
-                }""";
-        System.out.println("expected length = " + expected.length());
+        String expected = "0123456789\nabcdfghijk\n9876543210";
+        System.out.println("expected length = " + expected.length() + "\n");
 
-        var expected1 = Files.readString(Paths.get(fixture("expected.stylish"))
-                .toAbsolutePath().normalize()).trim();
-        System.out.println("expected1 length = " + expected1.length());
+        var expected1 = fixtureToStringFiles(fixture("test.txt"));
+        System.out.println("expected1 length= " + expected1.length());
+        System.out.println("expected1= \n" + expected1);
 
-        var expected2 = fixtureToString(fixture("expected.stylish"));
+        var expected2 = fixtureToString(fixture("test.txt"));
         System.out.println("expected2 length = " + expected2.length());
+        System.out.println("expected2 = \n" + expected2);
 
-        assertThat(expected1).isEqualTo(expected);
         assertThat(expected2).isEqualTo(expected);
+        assertThat(expected1).isEqualTo(expected);
     }
-
 }
