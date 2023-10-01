@@ -41,23 +41,30 @@ class AppTest {
 
     public static String fixtureToStringFiles(String filePath) throws Exception {
         var s = Files.readString(Paths.get(filePath).toAbsolutePath().normalize()).trim();
-//        var s1 = s.replace("789", "999");
-//        var s2 = s1.replace("210", "000");
-//        System.out.println("s2 = \n" + s2);
+        System.out.println("s = \n" + s);
         return s;
     }
     @Test
     public void Test() throws Exception {
         String expected = "0123456789\nabcdfghijk\n9876543210";
         System.out.println("expected length = " + expected.length() + "\n");
+        for (int i = 0; i < expected.length(); i++) {
+            System.out.println("i= " + i + " char= " + expected.charAt(i));
+        }
 
         var expected1 = fixtureToStringFiles(fixture("test.txt"));
         System.out.println("expected1 length= " + expected1.length());
         System.out.println("expected1= \n" + expected1);
+        for (int i = 0; i < expected1.length(); i++) {
+            System.out.println("i= " + i + " char= " + expected1.charAt(i));
+        }
 
         var expected2 = fixtureToString(fixture("test.txt"));
         System.out.println("expected2 length = " + expected2.length());
         System.out.println("expected2 = \n" + expected2);
+        for (int i = 0; i < expected2.length(); i++) {
+            System.out.println("i= " + i + " char= " + expected2.charAt(i));
+        }
 
         assertThat(expected2).isEqualTo(expected);
         assertThat(expected1).isEqualTo(expected);
